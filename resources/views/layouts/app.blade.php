@@ -228,7 +228,9 @@
             border-radius: var(--border-radius);
             padding: 15px;
             min-height: 400px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 3px 9px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column; /* permet separar header i tasks */
         }
 
         .column-header {
@@ -238,10 +240,15 @@
             padding-bottom: 10px;
             border-bottom: 2px solid var(--primary-color);
             color: var(--primary-dark);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
+
+        .kanban-tasks {
+            flex-grow: 1;          /* ocupa tot l’espai restant */
+            min-height: 200px;     /* assegura espai encara que no hi hagi tasques */
+            padding-top: 10px;
+        }
+
+
 
         .task-card {
             background-color: var(--card-bg-color);

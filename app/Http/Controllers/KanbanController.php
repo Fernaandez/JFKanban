@@ -67,23 +67,26 @@ class KanbanController extends Controller
     }
 
 
-    //crUd: UPDATE: (Només Estat - Moure a Esquerra/Dreta)
     public function updateStatus(Request $request, Task $task)
     {
-    // 1. Validació bàsica
-    $request->validate([
-        // Assegurem que el nou estat sigui un dels valors permesos pel camp ENUM
-        'status' => 'required|in:ToDo,Doing,Done', 
-    ]);
+        $request->validate([
+            'status' => 'required|in:ToDo,Doing,Done',
+        ]);
 
-    // 2. Actualització de l'estat a la BDD
-    $task->status = $request->input('status');
-    $task->save();
+        $task->status = $request->input('status');
+        $task->save();
 
-    // 3. Retornar a la vista principal (el tauler)
-    // El missatge de "success" és opcional però útil per a la vista
-    return redirect()->route('kanban.index')
-        ->with('success', "Estat de la tasca {$task->code} actualitzat a {$task->status}.");
+        // Si la crida és AJAX (fetch), retornem JSON
+        if ($request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'task' => $task
+            ]);
+        }
+
+        // Si ve dels botons, redirigim com abans
+        return redirect()->route('kanban.index')
+            ->with('success', "Estat de la tasca {$task->code} actualitzat a {$task->status}.");
     }
 
     //crUd: UPDATE: (Edició Completa - Formulari)
@@ -122,7 +125,6 @@ class KanbanController extends Controller
         // 3. Redirecció
         return redirect()->route('kanban.index')->with('success', 'La tasca "' . $task->code . '" ha estat actualitzada correctament.');
     }
-
 
     //cruD: DELETE:
     public function destroy(Task $task)

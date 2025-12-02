@@ -1,34 +1,5 @@
 <div class="d-flex justify-content-between align-items-center mt-2">
 
-    {{-- BOTONS PER MOURE (UPDATE STATUS) --}}
-    <div class="move-buttons">
-        {{-- Botó 'MOVE LEFT' (a Doing o ToDo) --}}
-        @if ($task->status != 'ToDo')
-            {{-- Form per canviar a l'estat anterior --}}
-            <form action="{{ route('tasks.update_status', $task) }}" method="POST" style="display:inline-block;">
-                @csrf
-                @method('PATCH')
-                <input type="hidden" name="status" value="{{ $task->status == 'Doing' ? 'ToDo' : 'Doing' }}">
-                <button type="submit" class="btn btn-sm btn-secondary" title="Moure a Esquerra">
-                    &#9664; {{-- Fletxa Esquerra --}}
-                </button>
-            </form>
-        @endif
-
-        {{-- Botó 'MOVE RIGHT' (a Doing o Done) --}}
-        @if ($task->status != 'Done')
-            {{-- Form per canviar a l'estat següent --}}
-            <form action="{{ route('tasks.update_status', $task) }}" method="POST" style="display:inline-block;">
-                @csrf
-                @method('PATCH')
-                <input type="hidden" name="status" value="{{ $task->status == 'ToDo' ? 'Doing' : 'Done' }}">
-                <button type="submit" class="btn btn-sm btn-secondary" title="Moure a Dreta">
-                    &#9654; {{-- Fletxa Dreta --}}
-                </button>
-            </form>
-        @endif
-    </div>
-    <br>
     
     
     {{-- BOTONS D'ACCIÓ (EDITAR I ELIMINAR) --}}
